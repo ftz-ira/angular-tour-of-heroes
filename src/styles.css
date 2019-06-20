@@ -15,6 +15,7 @@ h1 {
   body, input[type="text"], button {
     color: #333;
     font-family: Cambria, Georgia;
+    text-align: left;
   }
   /* everywhere else */
   * {
