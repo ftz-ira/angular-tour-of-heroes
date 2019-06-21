@@ -13,10 +13,10 @@ import { ApiUrls } from 'src/environments/environment';
 })
 
 export class HeroService {
-   //private heroesUrl = 'api/heroes';
-   private heroesUrl = ApiUrls.getUsersUrl;
-   
-   
+  //private heroesUrl = 'api/heroes';
+  private heroesUrl = ApiUrls.getUsersUrl;
+
+
 
   constructor(private messageService: MessageService, private http: HttpClient) { }
 
@@ -25,24 +25,18 @@ export class HeroService {
       tap(_ => this.log('fetched heroes')),
       share(),
       catchError(this.handleError<Hero[]>('getHeroes', []))
-      );
+    );
   }
-  
 
-   public getHero(id: number){
+
+  public getHero(id: number): Observable<Hero> {
     // return of(HEROES.find( hero => hero.id = id));
-    //return this.http.get<Hero>(this.heroesUrl);
-    this.getHeroes().subscribe( 
-      // res => res.filter(hero => hero.id === id),
-      res => console.log(res.find(res =>res.id == id)),
-      error => {
-        return console.log(error);
-      },
-      ()=> console.log('fini'));
     this.messageService.add(`HeroService getHero: fetched hero id=${id}`);
+    return this.getHeroes().pipe(
+      map( hero => hero.find(hero => hero.id === id)) );
   }
 
-  private handleError<T>(operartion = 'operation', result?: T){
+  private handleError<T>(operartion = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       console.error(error);
@@ -54,5 +48,5 @@ export class HeroService {
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
-  
+
 }
