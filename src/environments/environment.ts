@@ -15,7 +15,6 @@ export const environment = {
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 export const ApiUrls = {
-  'getUsersUrl': 'http://www.mocky.io/v2/5d0b46822f00002b00e3ef3c',
-  'getUserUrl': ' http://www.mocky.io/v2/5d0b7d1f2f00007600e3f133'
+  'getHeroesUrl': 'http://www.mocky.io/v2/5d0b46822f00002b00e3ef3c'
 }
   
