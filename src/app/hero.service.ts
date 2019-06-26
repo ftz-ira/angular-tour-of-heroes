@@ -15,6 +15,7 @@ export class HeroService {
 
   private heroesUrl = 'api/heroes';
   //private heroesUrl = ApiUrls.getHeroesUrl;
+  heroesList = new Observable<Hero[]>();
   
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -29,22 +30,24 @@ export class HeroService {
     );
   }
 
-  getHero(id: number): Observable<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.get<Hero>(url).pipe(
-      tap(_ => this.log(`fetched hero id = ${id}`)),
-      catchError(this.handleError<Hero>(`getHero id=${id}`))
-    );
-  }
-  /** api methode */
-  // public getHero(id: number): Observable<Hero> {
-  //   // return of(HEROES.find( hero => hero.id = id));
-  //   this.messageService.add(`HeroService getHero: fetched hero id=${id}`);
-  //   return this.getHeroes().pipe(
-  //     map( hero => hero.find(hero => hero.id === id)),
-  //     catchError(this.handleError<Hero>('getHeroes'))
-  //      );
+  // getHero(id: number): Observable<Hero> {
+  //   const url = `${this.heroesUrl}/${id}`;
+  //   return this.http.get<Hero>(url).pipe(
+  //     tap(_ => this.log(`fetched hero id = ${id}`)),
+  //     catchError(this.handleError<Hero>(`getHero id=${id}`))
+  //   );
   // }
+  /** api methode */
+  getHero(id: number): Observable<Hero> {
+    
+    // return of(HEROES.find( hero => hero.id = id));
+    this.messageService.add(`HeroService getHero: fetched hero id=${id}`);
+    return this.getHeroes().pipe(
+      tap(() => this.log('fetched hero')),
+      map( hero => hero.find(hero => hero.id === id)),
+      catchError(this.handleError<Hero>('getHeroes'))
+       );
+  }
 
   updateHero(hero: Hero): Observable<any> {
     
